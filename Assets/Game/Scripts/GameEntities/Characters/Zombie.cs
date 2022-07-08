@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Helpers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,10 +64,6 @@ public class Zombie : MonoBehaviour
 
     void Update()
     {
-        if(_isDead)
-        {
-            return;
-        }
         
         if (HP <= 0)
         {
@@ -120,14 +117,6 @@ public class Zombie : MonoBehaviour
     /// </remarks>
     private void Dead()
     {
-        //Hide from screen and disable colliding
-
-        foreach (var sprite in _sprites)
-        {
-            sprite.Key.enabled = false;
-        }
-        
-        GetComponent<Collider2D>().enabled = false;
 
         if (deadPrefub != null)
         {
@@ -140,11 +129,12 @@ public class Zombie : MonoBehaviour
             _audioSource.loop = false;
             _audioSource.clip = deadSound;
             _audioSource.Play();
-            Destroy(gameObject, _audioSource.clip.length);
+
+            ObjectsPool<Zombie>.DeleteObjectFromScene(this, deadSound.length);
         }
         else
         {
-            Destroy(gameObject);
+            ObjectsPool<Zombie>.DeleteObjectFromScene(this);
         }
     }
 
@@ -157,4 +147,9 @@ public class Zombie : MonoBehaviour
         //}
     }
 
+    public void Restore(Zombie prefub)
+    {
+        _isDead= false;
+        HP = prefub.HP;
+    }
 }

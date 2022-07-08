@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Helpers;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -19,8 +20,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         _gameState = GameObject.Find("GameState").GetComponent<GameState>();
-        _audioSource = gameObject.GetComponent<AudioSource>();
-        GetComponent<Rigidbody2D>().velocity = transform.up * bulletSpeed;
+        _audioSource = gameObject.GetComponent<AudioSource>();        
     }
 
     void Update()
@@ -32,7 +32,7 @@ public class Bullet : MonoBehaviour
             screenPosition.x < 0 ||
             screenPosition.x > Screen.width)
         {
-            Destroy(gameObject);
+            ObjectsPool<Bullet>.DeleteObjectFromScene(this);
         }      
     }
 
@@ -58,20 +58,18 @@ public class Bullet : MonoBehaviour
     /// </remarks>
     private void BulletDestroy()
     {
-        //Hide from screen and disable colliding
-        GetComponent<Renderer>().enabled = false;
-        GetComponent<Collider2D>().enabled = false;
-
         if (bulletPunch != null)
         {
             _audioSource.loop = false;
             _audioSource.clip = bulletPunch;
             _audioSource.Play();
-            Destroy(gameObject, _audioSource.clip.length);
+            
+            //TODO: play sound
+            ObjectsPool<Bullet>.DeleteObjectFromScene(this,bulletPunch.length);
         }
         else
         {
-            Destroy(gameObject);
+            ObjectsPool<Bullet>.DeleteObjectFromScene(this);
         }
     }
 

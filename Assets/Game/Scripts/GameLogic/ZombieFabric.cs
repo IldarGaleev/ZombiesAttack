@@ -1,3 +1,4 @@
+using Assets.Game.Scripts.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ public class ZombieFabric : MonoBehaviour
     public struct Item
     {
         [Tooltip("Префаб зомби")]
-        public GameObject prefub;
+        public Zombie prefub;
 
         [Tooltip("Вероятность появления")]
         [Range(0f, 1f)]
@@ -21,6 +22,7 @@ public class ZombieFabric : MonoBehaviour
 
     private GameObject[] _zombieSpawnPoints;
     private GameState _gameState;
+    private Dictionary<Zombie, ObjectsPool<Zombie>> _zombiesPool = new Dictionary<Zombie, ObjectsPool<Zombie>>();
 
     [Tooltip("Разновидности зомби")]
     public List<Item> zombies = new List<Item>();
@@ -34,6 +36,11 @@ public class ZombieFabric : MonoBehaviour
         _gameState = GameObject.Find("GameState").GetComponent<GameState>();
         _zombieSpawnPoints = GameObject.FindGameObjectsWithTag("ZombieSpawn");
 
+        foreach(Item item in zombies)
+        {
+            _zombiesPool.Add(item.prefub, new ObjectsPool<Zombie>(item.prefub, 3, this.transform));
+        }
+
         CreateZombie();
     }
 
@@ -43,7 +50,7 @@ public class ZombieFabric : MonoBehaviour
         Vector3 spawnArea = Random.insideUnitCircle * spawnRadius;
         int spawnPointId = Random.Range(0,_zombieSpawnPoints.Length);
 
-        GameObject newPrefub = zombies.Last().prefub;
+        Zombie newPrefub = zombies.Last().prefub;
         foreach (var zombie in zombies)
         {
             if (randomValue <= zombie.probability)
@@ -53,7 +60,8 @@ public class ZombieFabric : MonoBehaviour
             }
         }
 
-        Instantiate(newPrefub, _zombieSpawnPoints[spawnPointId].transform.position + spawnArea, Quaternion.identity);
+        var activeZombie = _zombiesPool[newPrefub].InstantiateToScene(_zombieSpawnPoints[spawnPointId].transform.position + spawnArea, Quaternion.identity);
+        activeZombie.Restore(newPrefub);
 
         Invoke(nameof(CreateZombie), _gameState.ZombieSpawnInterval);
 

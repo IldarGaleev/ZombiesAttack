@@ -492,7 +492,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967287
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -611,11 +611,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombies:
-  - prefub: {fileID: 8410267552610894743, guid: 0fac48dc3020974408806b7b6bc08834, type: 3}
+  - prefub: {fileID: 7691062953655000686, guid: 0fac48dc3020974408806b7b6bc08834, type: 3}
     probability: 0.6
-  - prefub: {fileID: 8410267552610894743, guid: ae6337177a1b79141b5c490afea21df7, type: 3}
+  - prefub: {fileID: 7691062953655000686, guid: ae6337177a1b79141b5c490afea21df7, type: 3}
     probability: 0.3
-  - prefub: {fileID: 8410267552610894743, guid: 28efaba3eb1bee341b5604a033467199, type: 3}
+  - prefub: {fileID: 7691062953655000686, guid: 28efaba3eb1bee341b5604a033467199, type: 3}
     probability: 0.1
   spawnRadius: 2
 --- !u!4 &723924552

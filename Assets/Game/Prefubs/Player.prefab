@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rateOfFile: 10
-  bulletPrefub: {fileID: 3842694718748591003, guid: 6bf87f9a925014c4fbc4fa2bdeb8692b, type: 3}
+  bulletPrefub: {fileID: 4094177861911334776, guid: 6bf87f9a925014c4fbc4fa2bdeb8692b, type: 3}
   firePoint: {fileID: 4938534032402050098}
 --- !u!1 &4938534032402050098
 GameObject:
