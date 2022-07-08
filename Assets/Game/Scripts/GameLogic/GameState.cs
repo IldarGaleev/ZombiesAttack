@@ -62,8 +62,9 @@ public class GameState: MonoBehaviour
             return _score;
         }
         set
-        {
+        {            
             _score = value;
+            _scoreUI.text = $"Score: {_score}";
             if(_score > BestScore)
             {
                 PlayerPrefs.SetInt(nameof(BestScore), _score);
@@ -95,10 +96,6 @@ public class GameState: MonoBehaviour
         InvokeRepeating(nameof(IncreaseingComplexity),increasingComplexityInterval, increasingComplexityInterval);
     }
 
-    private void Update()
-    {
-        _scoreUI.text = $"Score: {_score}";   
-    }
 
     private void IncreaseingComplexity()
     {
