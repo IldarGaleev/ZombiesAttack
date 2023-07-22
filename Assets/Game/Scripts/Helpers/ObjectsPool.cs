@@ -69,8 +69,9 @@ namespace Assets.Game.Scripts.Helpers
         public static void DeleteObjectFromScene(T obj, float delay = 0)
         {
             //obj.gameObject.layer = LayerMask.NameToLayer("Garbage");
-            //obj.StartCoroutine(DelayedDisable(obj, delay));
-            obj.gameObject.SetActive(false);
+            obj.gameObject.transform.position = new Vector3(0,0,-50);
+            obj.StartCoroutine(DelayedDisable(obj, delay));
+            //obj.gameObject.SetActive(false);
         }
 
         private static System.Collections.IEnumerator DelayedDisable(T obj, float interval)
